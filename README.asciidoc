@@ -9,11 +9,22 @@ Sample project to show some configurations that is usually used in production.
 - Http Cache
 - Metrics
 
+== REST
+
+http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+http://martinfowler.com/articles/richardsonMaturityModel.html
+
 == Configure Swagger with JAX-RS 2 - Restease 3.0.x
+
+http://swagger.io/
 
 == Integration Test - Rest Assured
 
+https://github.com/jayway/rest-assured
+http://wiremock.org/
+
 == API Versioning
+http://stackoverflow.com/questions/389169/best-practices-for-api-versioning
 
 == API Pagination
 
