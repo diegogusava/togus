@@ -1,0 +1,30 @@
+= Togus Project
+
+Sample project to show some configurations that is usually used in production.
+
+- How configure Swagger with JAX-RS 2.0
+- Integration test with rest assured
+- API Versioning
+- API Pagination
+- Http Cache
+- Metrics
+
+== Configure Swagger with JAX-RS 2 - Restease 3.0.x
+
+== Integration Test - Rest Assured
+
+== API Versioning
+
+== API Pagination
+
+== HTTP Cache
+
+To know more about http cache and how to use:
+
+https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
+
+https://docs.jboss.org/resteasy/docs/3.0.19.Final/userguide/html_single/#Cache_NoCache_CacheControl
+
+== Metrics
+
+http://metrics.dropwizard.io/3.1.0/getting-started/

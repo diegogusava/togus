@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" version="3.0"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
+
+    <servlet>
+        <servlet-name>metrics</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.AdminServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>metrics</servlet-name>
+        <url-pattern>/metrics/*</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>br.com.diegogusava.togus.infrastructure.metrics.MyMetricsServletContextListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>br.com.diegogusava.togus.infrastructure.metrics.MyHealthCheckServletContextListener</listener-class>
+    </listener>
+
+</web-app>
