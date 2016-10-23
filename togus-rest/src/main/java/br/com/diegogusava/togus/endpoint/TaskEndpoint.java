@@ -33,6 +33,8 @@ public class TaskEndpoint implements Serializable {
     @Inject
     private TaskRepository repository;
 
+    @PathParam("apiversion")
+    private String apiVersion;
 
     @GET
     public Response findAll() {
