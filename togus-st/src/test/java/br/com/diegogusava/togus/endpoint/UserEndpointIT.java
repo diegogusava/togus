@@ -16,7 +16,7 @@ public class UserEndpointIT {
 
     @BeforeClass
     public static void setup() {
-        RestAssured.basePath = System.getProperty("restassured.applicationpath", "/resttodo/rest");
+        RestAssured.basePath = System.getProperty("restassured.applicationpath", "/togus/rest/v1");
     }
 
     @Test

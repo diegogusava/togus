@@ -1,6 +1,7 @@
 package br.com.diegogusava.togus.endpoint;
 
 import br.com.diegogusava.togus.domain.User;
+import br.com.diegogusava.togus.dto.UserDTO;
 import br.com.diegogusava.togus.repository.UserRepository;
 import io.swagger.annotations.Api;
 import org.jboss.resteasy.annotations.cache.Cache;
@@ -20,6 +21,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.Serializable;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static br.com.diegogusava.togus.endpoint.converter.UserConverter.*;
 
 @Api(value = "Users")
 @Path("/{apiversion : v1|v2}/users")
@@ -36,7 +41,10 @@ public class UserEndpoint implements Serializable {
     @GET
     @Path("/")
     public Response findAll() {
-        return Response.ok(userRepository.findAll()).build();
+        List<UserDTO> dtos = userRepository.findAll().stream()
+                .map(u -> of(u))
+                .collect(Collectors.toList());
+        return Response.ok(dtos).build();
     }
 
     @GET
@@ -44,7 +52,19 @@ public class UserEndpoint implements Serializable {
     @Cache(maxAge = 60 * 10)
     public Response findById(@PathParam("id") Integer id) {
         return userRepository.findById(id).map(
-                user -> Response.ok(user).build()
+                user -> Response.ok(of(user)).build()
+        ).orElse(
+                Response.status(Response.Status.NOT_FOUND).build()
+        );
+    }
+
+    @GET
+    @Path("/{id}")
+    @Cache(maxAge = 60 * 10)
+    @Produces("application/vdn.diegogusava.user.complete+json")
+    public Response findByIdComplete(@PathParam("id") Integer id) {
+        return userRepository.findByIdComplete(id).map(
+                tuple2 -> Response.ok(ofComplete(tuple2._1, tuple2._2)).build()
         ).orElse(
                 Response.status(Response.Status.NOT_FOUND).build()
         );
@@ -53,19 +73,19 @@ public class UserEndpoint implements Serializable {
 
     @POST
     @Path("/")
-    public Response add(@Context UriInfo uriInfo, User user) {
-        final User userPersisted = userRepository.persist(user);
+    public Response add(@Context UriInfo uriInfo, UserDTO dto) {
+        final User userPersisted = userRepository.persist(toUser(dto));
         URI result = uriInfo.getRequestUriBuilder()
                 .path("{id}")
                 .resolveTemplate("id", userPersisted.getId())
                 .build();
-        return Response.created(result).entity(userPersisted).build();
+        return Response.created(result).entity(of(userPersisted)).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response put(@PathParam("id") Integer id, User user) {
-        userRepository.update(id, user);
+    public Response put(@PathParam("id") Integer id, UserDTO dto) {
+        userRepository.update(id, toUser(dto));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 

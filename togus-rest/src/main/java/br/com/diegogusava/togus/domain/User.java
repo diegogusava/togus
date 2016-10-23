@@ -12,7 +12,6 @@ import java.util.Objects;
 @Entity
 public class User implements Serializable {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -20,6 +19,20 @@ public class User implements Serializable {
     private String name;
 
     private String email;
+
+    @Deprecated
+    public User() {
+    }
+
+    public User(Integer id) {
+        this.id = id;
+    }
+
+    public User(Integer id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;
@@ -31,16 +44,6 @@ public class User implements Serializable {
 
     public String getEmail() {
         return email;
-    }
-
-    @Deprecated
-    public User() {
-    }
-
-    public User(Integer id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
     }
 
     @JsonIgnore

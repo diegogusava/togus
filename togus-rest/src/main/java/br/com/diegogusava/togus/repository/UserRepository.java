@@ -1,6 +1,9 @@
 package br.com.diegogusava.togus.repository;
 
+import br.com.diegogusava.togus.domain.Task;
 import br.com.diegogusava.togus.domain.User;
+import javaslang.Tuple;
+import javaslang.Tuple2;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -31,6 +34,19 @@ public class UserRepository {
                 .getResultList()
                 .stream()
                 .findFirst();
+    }
+
+    public Optional<Tuple2<User, List<Task>>> findByIdComplete(Integer id) {
+
+        findById(id).map( user -> {
+            List<Task> tasks = em.createQuery("SELECT new Task(t.title, t.content) FROM Task t WHERE t.user.id = :userId", Task.class)
+                    .setParameter("userId", user.getId())
+                    .getResultList();
+
+            return Tuple.of(user, tasks);
+        });
+
+        return Optional.empty();
     }
 
     @Transactional

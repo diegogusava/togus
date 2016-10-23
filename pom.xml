@@ -10,6 +10,8 @@
     <modules>
         <module>togus-rest</module>
         <module>togus-st</module>
+        <module>togus-client</module>
+        <module>togus-dto</module>
     </modules>
     <packaging>pom</packaging>
 
